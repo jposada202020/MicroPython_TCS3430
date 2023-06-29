@@ -16,12 +16,6 @@ MicroPython driver for the AMS TCS3430 Color and ALS sensor
 from micropython import const
 from micropython_tcs3430.i2c_helpers import CBits, RegisterStruct
 
-try:
-    from typing import Tuple
-except ImportError:
-    pass
-
-
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/jposada202020/MicroPython_TCS3430.git"
 
@@ -87,8 +81,7 @@ class TCS3430:
     _als_gain = CBits(2, _CFG1, 0)
     _raw_data = RegisterStruct(_DATA, ">HHHH")
 
-
-    _waiting_times = {0:2.78, 1:33.4}
+    _waiting_times = {0: 2.78, 1: 33.4}
 
     def __init__(self, i2c, address: int = 0x39) -> None:
         self._i2c = i2c
@@ -99,7 +92,6 @@ class TCS3430:
         print(bin(self.info_needed))
         self._operation_mode = ENABLED
         print(self._integration_time)
-
 
     @property
     def operation_mode(self) -> str:
@@ -137,7 +129,7 @@ class TCS3430:
 
     @integration_time.setter
     def integration_time(self, value: float) -> None:
-        if value>711 or value<2.78:
+        if value > 711 or value < 2.78:
             raise ValueError("Value must be a valid integration_time setting")
         self._integration_time = int(value / 2.78)
 
@@ -150,7 +142,7 @@ class TCS3430:
         forth; By asserting wlong, in register 0x8D the wait time is given
         in multiples of 33.4ms (12x)
         """
-        return self._als_wait_time * _waiting_times[self._wait_long]
+        return self._als_wait_time * self._waiting_times[self._wait_long]
 
     @als_wait_time.setter
     def als_wait_time(self, value: float) -> None:
@@ -160,7 +152,7 @@ class TCS3430:
         else:
             if value > 23747 or value < 33.4:
                 raise ValueError("Value must be a valid als_wait_time setting")
-        self._als_wait_time = int(value / _waiting_times[self._wait_long])
+        self._als_wait_time = int(value / self._waiting_times[self._wait_long])
 
     @property
     def als_gain(self) -> str:
@@ -190,5 +182,8 @@ class TCS3430:
 
     @property
     def measurements(self):
+        """
+        Return ALS values
+        """
         als_z, als_y, ir1_value, als_x = self._raw_data
         return als_z, als_y, als_x, ir1_value
