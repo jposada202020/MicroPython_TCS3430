@@ -16,7 +16,7 @@ while True:
         print("Current Als gain setting: ", tcs.als_gain)
         for _ in range(10):
             lux = tcs.lux
-            print("Temperature: {:.2f}g".format(lux))
-            print()
+            z, y, ir1, x = tcs.measurements
+            print(f"x: {x}, y: {y}, z: {z}, ir1: {ir1}")
             time.sleep(0.5)
         tcs.als_gain = als_gain
