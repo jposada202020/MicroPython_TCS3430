@@ -21,14 +21,12 @@ urls = {Homepage = "https://github.com/jposada202020/MicroPython_TCS3430"}
 keywords = [
     "sensor",
     "micropython",
-    "tcs3430",
     "sensor",
     "als",
     "color",
     "tcs3430",
     "ams",
     "driver",
-    "micropython",
 ]
 license = {text = "MIT"}
 classifiers = [

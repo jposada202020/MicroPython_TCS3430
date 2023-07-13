@@ -18,5 +18,6 @@ while True:
             lux = tcs.lux
             z, y, ir1, x = tcs.measurements
             print(f"x: {x}, y: {y}, z: {z}, ir1: {ir1}")
+            print(f"lux: {lux}")
             time.sleep(0.5)
         tcs.als_gain = als_gain

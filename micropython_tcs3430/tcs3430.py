@@ -63,11 +63,13 @@ class TCS3430:
     .. code-block:: python
 
         i2c = I2C(1, sda=Pin(2), scl=Pin(3))
-        tcs3430 = tcs3430.TCS3430(i2c)
+        tcs = tcs3430.TCS3430(i2c)
 
     Now you have access to the attributes
 
     .. code-block:: python
+
+        tcs = tcs.measurements
 
     """
 
@@ -89,9 +91,8 @@ class TCS3430:
 
         if self._device_id != 0xDC:
             raise RuntimeError("Failed to find TCS3430")
-        print(bin(self.info_needed))
+
         self._operation_mode = ENABLED
-        print(self._integration_time)
 
     @property
     def operation_mode(self) -> str:
